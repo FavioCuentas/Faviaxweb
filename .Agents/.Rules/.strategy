@@ -1,0 +1,39 @@
+# Faviax Universe Website
+
+## Business Requirements
+
+* An immersive single-page web application (Landing Page) for the Faviax sci-fi universe.
+* The web app should showcase the lore, history, and link to all digital music platforms.
+* The design must feel like accessing a classified archive from the future or a cyberpunk terminal.
+* The priority is a slick, professional, dark-mode UI/UX with an engaging "Glassmorphism" style.
+* Must include clear spaces for future custom images and artwork.
+
+## Technical Details
+
+* Implemented as a modern single-page dark mode experience.
+* Typography: Futuristic geometric fonts for headings (e.g., Orbitron, Syncopate) and monospaced fonts for subtitles/metadata (e.g., Roboto Mono).
+* The layout must be divided into 5 distinct sections: Hero (Start), Archive Access (Lore grid), Transmissions (Music layout), Chronicles (Timeline), and Connect (Network links).
+* Cards and containers should feature subtle borders that glow on hover.
+* Section dividers should use thin dotted or solid lines.
+
+## Color Scheme
+
+* Main Background: Very dark space purple/blue (`#0B0710` to `#120A1A`).
+* Cyan/Neon Primary: `#00F3FF` - primary buttons, music links, glows.
+* Purple/Magenta Secondary: `#B026FF` or `#8A2BE2` - subtitles, card borders, decorative elements.
+* White Main Text: `#FFFFFF` - for high legibility.
+* Gray/Blue Secondary Text: `#A0A5B5` - supporting text.
+
+## Strategy
+
+1. Build the Hero Section with a full-screen cyberpunk background placeholder, centered massive title, and two neon Call to Action buttons.
+2. Develop "The Signal" section using a 3-column grid for lore cards (image on top, neon title, short paragraph).
+3. Create the "Transmissions" section with a 2-column layout (featured album art on the left, tracklist and minimalist streaming platform icons on the right).
+4. Implement the "Neo-Astra Chronicles" as a vertical timeline or zigzag layout highlighting key dates in cyan next to historical text and panorama image placeholders.
+5. Finish with the "Connect" section using a 4-column grid for social/community buttons with hover glow effects, ending with a minimal footer.
+
+## Coding Standards
+
+1. Image Formats: Use WebP or high-quality compressed JPGs to ensure deep blacks without pixelation.
+2. Transparency: Use PNG with transparent backgrounds for isolated elements (characters, ships) in the timeline and music sections.
+3. Consistency: Ensure all image placeholders and color filters strictly respect the purple and cyan core palette.

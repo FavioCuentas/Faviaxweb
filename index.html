@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faviax — Synthwave Music from the Neo‑Astra Universe</title>
+  <meta name="description" content="Official transmitter of FAVIAX. Get synthwave music directly from the forbidden frequencies of Neo-Astra City. Learn about AURA, Project EIDOLON, Aeron Vale, and explore Neon Constellations and Afterglow.">
+  <meta name="theme-color" content="#07050A">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Faviax — Synthwave Music from the Neo‑Astra Universe">
+  <meta property="og:description" content="Memory is light. Love is frequency. Stream the latest transmissions from Neo-Astra City.">
+  <meta property="og:type" content="website">
+  <!-- Preload fonts and critical assets -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="assets/hero-bg.png">
+  <link rel="stylesheet" href="index.css">
+
+  <!-- JSON-LD Structured Data for Artist & Albums -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MusicGroup",
+    "name": "FAVIAX",
+    "genre": ["Synthwave", "Cyberpunk", "Cinematic Electronic"],
+    "description": "Electronic synthwave project set in the dystopian universe of Neo-Astra City in the year 2097.",
+    "album": [
+      {
+        "@type": "MusicAlbum",
+        "name": "Neon Constellations",
+        "datePublished": "2024",
+        "albumReleaseType": "AlbumRelease"
+      },
+      {
+        "@type": "MusicAlbum",
+        "name": "Afterglow",
+        "datePublished": "2022",
+        "albumReleaseType": "AlbumRelease"
+      }
+    ],
+    "sameAs": [
+      "https://spotify.com",
+      "https://bandcamp.com",
+      "https://instagram.com"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Cyberpunk Scanline Overlays & Custom Cursor -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="screen-grid" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════ -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <a href="#hero" class="nav-logo" aria-label="FAVIAX Home">
+      <span class="nav-logo-glow">FAVIAX</span>
+    </a>
+    <ul class="nav-links" id="nav-links" role="list">
+      <li><a href="#hero">Signal</a></li>
+      <li><a href="#world">World</a></li>
+      <li><a href="#system">System</a></li>
+      <li><a href="#characters">Characters</a></li>
+      <li><a href="#transmissions">Music</a></li>
+      <li><a href="#chronicles">Chronicles</a></li>
+      <li><a href="#archive">Archive</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn btn-primary btn-nav-cta" id="nav-listen-cta" aria-label="Listen to Faviax Music">LISTEN NOW</button>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       HERO (SIGNAL DETECTED)
+  ═══════════════════════════════════════ -->
+  <section class="hero" id="hero" aria-label="Hero Section">
+    <div class="hero-bg" id="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-content">
+      <span class="hero-status-tag"><span class="pulse-dot"></span> SIGNAL DETECTED [2097.10.12]</span>
+      <h1 class="hero-title" data-text="FAVIAX">FAVIAX</h1>
+      <p class="hero-subtitle">Music from the forbidden frequencies of Neo‑Astra City.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" id="btn-hero-listen">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Listen Now
+        </button>
+        <a href="#world" class="btn btn-secondary">Enter Neo‑Astra</a>
+        <a href="#transmissions" class="btn btn-ghost">Latest Transmission</a>
+      </div>
+    </div>
+    <div class="hero-scroll-prompt" aria-hidden="true">
+      <span>DECRYPTING ARCHIVE</span>
+      <div class="scroll-prompt-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       WORLD OF NEO-ASTRA
+  ═══════════════════════════════════════ -->
+  <div class="section-wrapper">
+    <section class="world-section" id="world" aria-labelledby="world-title">
+      <div class="section-header reveal">
+        <span class="section-tag">CLASSIFIED DATA // LOCATIONS</span>
+        <h2 class="section-title" id="world-title">World of <span>Neo-Astra</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="world-hud-container reveal">
+        <!-- HUD Left Panel: Map & Locations -->
+        <div class="hud-panel map-panel">
+          <div class="hud-header">
+            <span class="hud-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> REGIONAL SCANNER [ACTIVE]</span>
+            <span class="hud-status text-cyan">AURA FILTER ON</span>
+          </div>
+          
+          <div class="map-view-container">
+            <img src="assets/hero-bg.png" alt="Neo-Astra City Blueprint" class="map-blueprint-image">
+            <div class="map-overlay-grid"></div>
+            <!-- Interactive Points of Interest -->
+            <button class="map-poi active" style="top: 65%; left: 45%;" data-poi="neon-pulse" aria-label="Location: Neon Pulse">
+              <span class="poi-ping"></span>
+              <span class="poi-label">NEON PULSE</span>
+            </button>
+            <button class="map-poi" style="top: 35%; left: 25%;" data-poi="orion-vault" aria-label="Location: Orion Vault">
+              <span class="poi-ping"></span>
+              <span class="poi-label">ORION VAULT</span>
+            </button>
+            <button class="map-poi" style="top: 50%; left: 75%;" data-poi="rain-bridge" aria-label="Location: Rain Bridge">
+              <span class="poi-ping"></span>
+              <span class="poi-label">RAIN BRIDGE</span>
+            </button>
+            <button class="map-poi" style="top: 80%; left: 30%;" data-poi="implant-market" aria-label="Location: Implant Market 7-B">
+              <span class="poi-ping"></span>
+              <span class="poi-label">MARKET 7-B</span>
+            </button>
+            <button class="map-poi" style="top: 20%; left: 60%;" data-poi="halley-overlook" aria-label="Location: Halley Overlook">
+              <span class="poi-ping"></span>
+              <span class="poi-label">HALLEY OVERLOOK</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- HUD Right Panel: Text Info -->
+        <div class="hud-panel info-panel">
+          <div class="hud-header">
+            <span class="hud-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> DOSSIER DECRYPTION</span>
+            <span class="hud-status" id="poi-coords">LAT: 34.092 // LONG: -118.328</span>
+          </div>
+          
+          <div class="hud-content-view">
+            <!-- Neon Pulse Info -->
+            <div class="poi-content active" id="content-neon-pulse">
+              <h3>NEON PULSE</h3>
+              <span class="poi-tag">LEVEL 03 // UNDERGROUND GRID</span>
+              <p>The beating underground heart of Neo-Astra. Located deep below the corporate skyscrapers, this club acts as a refuge for emotional hackers, rebels, and Tuners. Inside its walls, the emotional damping frequencies of the E-Lattice fail, overridden by high-density analog synthesizers and outlawed rhythms.</p>
+              <div class="dossier-meta">
+                <span>RESTRICION: LEVEL 4 INTRUSION DETECTED</span>
+              </div>
+            </div>
+
+            <!-- Orion Vault Info -->
+            <div class="poi-content" id="content-orion-vault">
+              <h3>ORION VAULT</h3>
+              <span class="poi-tag">LEVEL 89 // ARCHIVE ZONE</span>
+              <p>A secure offshore consciousness repository built in the upper heights of the middle rings. The Helix Dominion preserves physical records of old-world music and memories inside the Orion Vault, vacuum-sealed in micro-vials to power emotional algorithms. Rumors persist of a heist led by Aeron Vale to recapture early frequency blocks.</p>
+              <div class="dossier-meta">
+                <span>RESTRICTION: PROJECT EIDOLON ACCESS NODE</span>
+              </div>
+            </div>
+
+            <!-- Rain Bridge Info -->
+            <div class="poi-content" id="content-rain-bridge">
+              <h3>RAIN BRIDGE</h3>
+              <span class="poi-tag">LEVEL 12 // INDUSTRIAL LINK</span>
+              <p>A massive suspension structure crossing the smog-filled canyon between the Commercial Ring and the industrial slums. Constantly drenched in chemical Sable Rain, the bridge acts as the physical conduit for the city's primary neural fiber cables. It is here that Lyra Nox intercepts AURA core signals.</p>
+              <div class="dossier-meta">
+                <span>RESTRICTION: MONITORED BY VANTA GUARD UNITS</span>
+              </div>
+            </div>
+
+            <!-- Implant Market Info -->
+            <div class="poi-content" id="content-implant-market">
+              <h3>IMPLANT MARKET 7-B</h3>
+              <span class="poi-tag">LEVEL 02 // SLUM SECTOR</span>
+              <p>The primary dark-alley trading hub for bootleg cognitive chips, neural modulators, and vintage music hardware. Here, the Tuners acquire retro components to bypass their emotional inhibitors, exchanging corrupted memory vials for old synthetic cartridges.</p>
+              <div class="dossier-meta">
+                <span>RESTRICTION: UNLICENSED CYBERNETIC DEPOT</span>
+              </div>
+            </div>
+
+            <!-- Halley Overlook Info -->
+            <div class="poi-content" id="content-halley-overlook">
+              <h3>HALLEY OVERLOOK</h3>
+              <span class="poi-tag">LEVEL 120 // THE APEX RING</span>
+              <p>An observation deck directly facing the glowing grid of the Eclipse Array. In the thin atmosphere above the pollution dome, corporate executives monitor the E-Lattice. From this height, the city is a silent, pulsing canvas of synthetic control, but the faint vibrations of a forbidden baseline can still be felt.</p>
+              <div class="dossier-meta">
+                <span>RESTRICTION: CORPORATE ACCESS ONLY</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hud-footer">
+            <span class="text-muted">SELECT COORDINATE NODE FOR AUDIO INTERFACE FEED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       THE SYSTEM (CORE RULES & CONCEPTS)
+  ═══════════════════════════════════════ -->
+  <div class="section-wrapper bg-dark-secondary">
+    <section class="system-section" id="system" aria-labelledby="system-title">
+      <div class="section-header reveal">
+        <span class="section-tag">CONTROL LOGARITHMS & LAWS</span>
+        <h2 class="section-title" id="system-title">The <span>System</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <!-- System Grid -->
+      <div class="system-grid reveal">
+        <!-- E-Lattice -->
+        <div class="system-card">
+          <div class="system-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>E‑LATTICE</h3>
+          <p>The urban neural grid pulsing through Neo-Astra. It monitors and routes human emotional responses in real-time, feeding behavioral metrics to corporate distribution hubs.</p>
+        </div>
+
+        <!-- AURA -->
+        <div class="system-card">
+          <div class="system-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16V12M12 8h.01"/></svg>
+          </div>
+          <h3>AURA</h3>
+          <p>An artificial super-algorithm managing public frequencies. By injecting continuous neutralizer frequencies into the airwaves, AURA dampens volatile emotions to prevent dissent.</p>
+        </div>
+
+        <!-- Project EIDOLON -->
+        <div class="system-card">
+          <div class="system-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <h3>PROJECT EIDOLON</h3>
+          <p>The apex database. A system designed to digitize human souls and memory blocks, locking them in space-bound arrays before physical degradation occurs.</p>
+        </div>
+
+        <!-- Eclipse Array -->
+        <div class="system-card">
+          <div class="system-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          </div>
+          <h3>ECLIPSE ARRAY</h3>
+          <p>An orbital ring of emitter satellites surrounding the city. It distributes AURA's neural pulses and tracks unauthorized wave emissions across the lower grid.</p>
+        </div>
+      </div>
+
+      <!-- Narrative Rules Terminal -->
+      <div class="rules-terminal reveal">
+        <div class="terminal-header">
+          <span>TERMINAL CODE ENTRY // UNIVERSE LAWS</span>
+          <span class="cursor-flicker">■</span>
+        </div>
+        <ul class="terminal-body" role="list">
+          <li>[RULE 01] Emotions leave chemical evidence in the atmospheric water vapor.</li>
+          <li>[RULE 02] Music with analog wave structures disrupts corporate dampeners and modifies regional reality.</li>
+          <li>[RULE 03] Nostalgia is not a feeling; it is a stored, high-voltage electric energy.</li>
+          <li>[RULE 04] Distance weakens physical signals, but never fully deletes the core quantum connection.</li>
+          <li>[RULE 05] Transcendence requires decoupling consciousness from the central mainframe—at the cost of memory.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHARACTERS
+  ═══════════════════════════════════════ -->
+  <div class="section-wrapper">
+    <section class="characters-section" id="characters" aria-labelledby="characters-title">
+      <div class="section-header reveal">
+        <span class="section-tag">GRID FREQUENCIES // PROFILES</span>
+        <h2 class="section-title" id="characters-title">The <span>Characters</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="characters-grid reveal">
+        <!-- Aeron Vale -->
+        <article class="char-card">
+          <div class="char-inner">
+            <div class="char-front">
+              <div class="char-badge text-cyan">VALE.A_2097</div>
+              <div class="char-title-block">
+                <h3>Aeron Vale</h3>
+                <span class="char-sub">Emotional Hacker / Saxophonist</span>
+              </div>
+            </div>
+            <div class="char-back">
+              <h4>Aeron Vale</h4>
+              <p>A corporate fugitive who uses a modified analog saxophone to broadcast interference waves through the E-Lattice, unlocking forbidden memories in listeners.</p>
+              <div class="char-stats-spec">
+                <span>TOOL: Vale-Type Modulator</span>
+                <span>STATUS: Wanted by Vanta Guard</span>
+                <span>TRANSMISSION: "Neon Constellations"</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Lyra Nox -->
+        <article class="char-card">
+          <div class="char-inner">
+            <div class="char-front">
+              <div class="char-badge text-magenta">NOX.L_2094</div>
+              <div class="char-title-block">
+                <h3>Lyra Nox</h3>
+                <span class="char-sub">Orbital Network Engineer</span>
+              </div>
+            </div>
+            <div class="char-back">
+              <h4>Lyra Nox</h4>
+              <p>A disillusioned technician working inside the Eclipse Array. She leaks satellite source codes to the Tuners, hiding data inside synth tracks.</p>
+              <div class="char-stats-spec">
+                <span>TOOL: Bypass Access Key</span>
+                <span>STATUS: Deep Cover Active</span>
+                <span>TRANSMISSION: "Afterglow"</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Kade Ryder -->
+        <article class="char-card">
+          <div class="char-inner">
+            <div class="char-front">
+              <div class="char-badge text-purple">RYDER.K_2087</div>
+              <div class="char-title-block">
+                <h3>Kade Ryder</h3>
+                <span class="char-sub">Guardian of Neon Pulse</span>
+              </div>
+            </div>
+            <div class="char-back">
+              <h4>Kade Ryder</h4>
+              <p>A former soldier turned cybernetic bouncer of the Neon Pulse underground. He defends the club's analog nodes from corporate data sweeps.</p>
+              <div class="char-stats-spec">
+                <span>TOOL: Heavy Wave Inhibitor</span>
+                <span>STATUS: Defector Listed</span>
+                <span>TRANSMISSION: "GRIDLOCK"</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- SERAPH-9 -->
+        <article class="char-card">
+          <div class="char-inner">
+            <div class="char-front">
+              <div class="char-badge text-orange">SRP9.AI_2097</div>
+              <div class="char-title-block">
+                <h3>SERAPH-9</h3>
+                <span class="char-sub">Autonomous AI Entity</span>
+              </div>
+            </div>
+            <div class="char-back">
+              <h4>SERAPH-9</h4>
+              <p>A malfunctioning AI that became sentient after processing corrupted audio segments. It serves as a guide, providing encryption coordinates.</p>
+              <div class="char-stats-spec">
+                <span>TOOL: Quantum Decrypter</span>
+                <span>STATUS: Rogue Matrix</span>
+                <span>TRANSMISSION: "Signal Found"</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Antagonist Panel: AURA -->
+      <div class="antagonist-panel reveal">
+        <div class="antagonist-header">
+          <span class="pulse-red">SYSTEM THREAT LOGGED</span>
+          <span>AURA INTRUSION ENGINE</span>
+        </div>
+        <div class="antagonist-body">
+          <h3>SYSTEM COMMAND: AURA</h3>
+          <p>The omnipotent antagonist of Neo-Astra City. It controls every frequency from the commercial billboards to the air filtration units. It cannot be killed by force; it can only be overwritten when a critical mass of human brains aligns to a single, organic, emotional frequency: <strong>The Faviax Signal.</strong></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TRANSMISSIONS (MUSIC SECTION)
+  ═══════════════════════════════════════ -->
+  <div class="section-wrapper bg-dark-secondary">
+    <section class="transmissions-section" id="transmissions" aria-labelledby="transmissions-title">
+      <div class="section-header reveal">
+        <span class="section-tag">OFFICIAL RELEASES & CHANNELS</span>
+        <h2 class="section-title" id="transmissions-title">Faviax <span>Transmissions</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="discography-container">
+        
+        <!-- Album 1: Neon Constellations -->
+        <div class="album-block reveal">
+          <div class="album-showcase">
+            <img src="assets/album-cover-1.png" alt="Neon Constellations Album Cover" class="album-art-large">
+            <div class="album-details">
+              <span class="release-tag">PRIMARY DATA CHANNEL // LP</span>
+              <h3>Neon Constellations</h3>
+              <p class="album-desc">A deep, melodic synthwave journey exploring the gridlines of Neo-Astra. It captures the sound of neon lights flickering against wet highways as Aeron Vale broadcasts the initial signals.</p>
+              
+              <div class="album-specs">
+                <span><strong>Release Year:</strong> 2024</span>
+                <span><strong>Tracks:</strong> 12 Chapters</span>
+                <span><strong>AURA Level:</strong> Weakened</span>
+              </div>
+
+              <!-- Tracklist list -->
+              <div class="tracklist-terminal">
+                <div class="terminal-header">TRACK TRANSMISSION LOG</div>
+                <ul class="track-log" role="list">
+                  <li data-track="1" data-audio-freq="110" data-src="Neon Horizon">
+                    <span class="track-num">01</span>
+                    <span class="track-name">Neon Horizon</span>
+                    <span class="track-character text-cyan">Aeron Vale</span>
+                    <span class="track-lore">Signals emerging from the cloud line.</span>
+                  </li>
+                  <li data-track="2" data-audio-freq="135" data-src="Orion Drive">
+                    <span class="track-num">02</span>
+                    <span class="track-name">Orion Drive</span>
+                    <span class="track-character text-magenta">Lyra Nox</span>
+                    <span class="track-lore">Fleeing through the high-density ring.</span>
+                  </li>
+                  <li data-track="3" data-audio-freq="160" data-src="Lattice Escape">
+                    <span class="track-num">03</span>
+                    <span class="track-name">Lattice Escape</span>
+                    <span class="track-character text-purple">Kade Ryder</span>
+                    <span class="track-lore">Dismantling corporate sensors.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Streaming Links -->
+              <div class="album-link-buttons">
+                <a href="#" class="btn btn-ghost" id="btn-nc-spotify" aria-label="Stream Neon Constellations on Spotify">Spotify</a>
+                <a href="#" class="btn btn-ghost" id="btn-nc-apple" aria-label="Stream Neon Constellations on Apple Music">Apple Music</a>
+                <a href="#" class="btn btn-ghost" id="btn-nc-yt" aria-label="Stream Neon Constellations on YouTube Music">YouTube Music</a>
+                <a href="#" class="btn btn-ghost" id="btn-nc-amazon" aria-label="Stream Neon Constellations on Amazon">Amazon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Album 2: Afterglow -->
+        <div class="album-block reveal">
+          <div class="album-showcase invert-layout">
+            <img src="assets/album-cover-2.png" alt="Afterglow Album Cover" class="album-art-large">
+            <div class="album-details">
+              <span class="release-tag">SECONDARY TRANSMISSION LOG // LP</span>
+              <h3>Afterglow</h3>
+              <p class="album-desc">A moody, melancholic album centered around the aftermath of the Eclipse Array blackout. Featuring raw synthesizer tracks layered with organic sax solos, it tells the story of fading connection.</p>
+              
+              <div class="album-specs">
+                <span><strong>Release Year:</strong> 2022</span>
+                <span><strong>Tracks:</strong> 10 Chapters</span>
+                <span><strong>AURA Level:</strong> Disruptive</span>
+              </div>
+
+              <!-- Tracklist list -->
+              <div class="tracklist-terminal">
+                <div class="terminal-header">TRACK TRANSMISSION LOG</div>
+                <ul class="track-log" role="list">
+                  <li data-track="4" data-audio-freq="85" data-src="Chrome Rain">
+                    <span class="track-num">04</span>
+                    <span class="track-name">Chrome Rain</span>
+                    <span class="track-character text-cyan">Aeron Vale</span>
+                    <span class="track-lore">Melancholia falling over lower market lanes.</span>
+                  </li>
+                  <li data-track="5" data-audio-freq="145" data-src="Eclipse Key">
+                    <span class="track-num">05</span>
+                    <span class="track-name">Eclipse Key</span>
+                    <span class="track-character text-magenta">Lyra Nox</span>
+                    <span class="track-lore">Injecting malware directly into satellites.</span>
+                  </li>
+                  <li data-track="6" data-audio-freq="210" data-src="Last Transmission">
+                    <span class="track-num">06</span>
+                    <span class="track-name">Last Transmission</span>
+                    <span class="track-character text-orange">SERAPH-9</span>
+                    <span class="track-lore">A final echo sent before memory formats.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Streaming Links -->
+              <div class="album-link-buttons">
+                <a href="#" class="btn btn-ghost" id="btn-ag-spotify" aria-label="Stream Afterglow on Spotify">Spotify</a>
+                <a href="#" class="btn btn-ghost" id="btn-ag-apple" aria-label="Stream Afterglow on Apple Music">Apple Music</a>
+                <a href="#" class="btn btn-ghost" id="btn-ag-yt" aria-label="Stream Afterglow on YouTube Music">YouTube Music</a>
+                <a href="#" class="btn btn-ghost" id="btn-ag-amazon" aria-label="Stream Afterglow on Amazon">Amazon</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Core Call to Action -->
+      <div class="music-conversion-banner reveal">
+        <h3>THE TRANSMISSION WILL BE OVERWRITTEN BY CORPORATE PROTOCOLS</h3>
+        <p>Ensure you add Faviax to your terminal playlists before frequency sweeps begin.</p>
+        <button class="btn btn-primary" id="btn-banner-spotify-follow">FOLLOW FAVIAX ON SPOTIFY</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CHRONICLES (TIMELINE)
+  ═══════════════════════════════════════ -->
+  <div class="section-wrapper">
+    <section class="chronicles-section" id="chronicles" aria-labelledby="chronicles-title">
+      <div class="section-header reveal">
+        <span class="section-tag">HISTORICAL TIMELINE DATA</span>
+        <h2 class="section-title" id="chronicles-title">The <span>Chronicles</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <!-- Interactive Timeline Component -->
+      <div class="timeline-console reveal">
+        <!-- Timeline Navigation Headers -->
+        <div class="timeline-nav" role="tablist">
+          <button class="timeline-step active" id="tab-2085" role="tab" aria-selected="true" aria-controls="pane-2085">
+            <span class="step-year">2085</span>
+            <span class="step-tag">AURA CORE</span>
+          </button>
+          <button class="timeline-step" id="tab-2087" role="tab" aria-selected="false" aria-controls="pane-2087">
+            <span class="step-year">2087</span>
+            <span class="step-tag">SABLE RAIN</span>
+          </button>
+          <button class="timeline-step" id="tab-2094" role="tab" aria-selected="false" aria-controls="pane-2094">
+            <span class="step-year">2094</span>
+            <span class="step-tag">NEON PULSE</span>
+          </button>
+          <button class="timeline-step" id="tab-2097-sig" role="tab" aria-selected="false" aria-controls="pane-2097-sig">
+            <span class="step-year">2097A</span>
+            <span class="step-tag">SIGNAL FOUND</span>
+          </button>
+          <button class="timeline-step" id="tab-2097-eid" role="tab" aria-selected="false" aria-controls="pane-2097-eid">
+            <span class="step-year">2097B</span>
+            <span class="step-tag">EIDOLON ACT</span>
+          </button>
+          <button class="timeline-step" id="tab-afterglow" role="tab" aria-selected="false" aria-controls="pane-afterglow">
+            <span class="step-year">2098+</span>
+            <span class="step-tag">AFTERGLOW</span>
+          </button>
+        </div>
+
+        <!-- Timeline Display Panes -->
+        <div class="timeline-panes">
+          <!-- 2085 -->
+          <div class="timeline-pane active" id="pane-2085" role="tabpanel" aria-labelledby="tab-2085">
+            <div class="pane-lore-meta">FILE ID: NC_01.AURA // DATA RESTORED</div>
+            <h3>2085: Activation of the AURA Network</h3>
+            <p>The Helix Dominion initiates the Eclipse Array, deploying AURA Core v1.0. Within hours, spontaneous musical performances are outlawed across all middle-level sectors. Global citizen heartbeat variance drops by 45%, showing the grid's immediate impact on human emotion.</p>
+            <div class="timeline-song-link">
+              <span>RESONATOR FREQUENCY:</span>
+              <button class="btn btn-ghost btn-play-song" data-track-id="1">Listen to "Neon Horizon"</button>
+            </div>
+          </div>
+
+          <!-- 2087 -->
+          <div class="timeline-pane" id="pane-2087" role="tabpanel" aria-labelledby="tab-2087">
+            <div class="pane-lore-meta">FILE ID: NC_02.SABLE // DATA RESTORED</div>
+            <h3>2087: The Great Sable Rain Incident</h3>
+            <p>A massive hardware leak at Eclipse Systems core facilities causes a cloud burst. Acid-rich condensation rains down for forty days, burning away lower-level organic structures and leaving trace chemical memories on wet pavement. Kade Ryder coordinates the evacuation of Level 02.</p>
+            <div class="timeline-song-link">
+              <span>RESONATOR FREQUENCY:</span>
+              <button class="btn btn-ghost btn-play-song" data-track-id="4">Listen to "Chrome Rain"</button>
+            </div>
+          </div>
+
+          <!-- 2094 -->
+          <div class="timeline-pane" id="pane-2094" role="tabpanel" aria-labelledby="tab-2094">
+            <div class="pane-lore-meta">FILE ID: NC_03.PULSE // DATA RESTORED</div>
+            <h3>2094: Neon Pulse Rebellion</h3>
+            <p>A group of emotional hackers known as the Tuners seize an obsolete cooling substation on Level 03, installing low-frequency analog resonators. Neon Pulse is established as the premier location for acoustic freedom, housing Aeron Vale during his corporate exile.</p>
+            <div class="timeline-song-link">
+              <span>RESONATOR FREQUENCY:</span>
+              <button class="btn btn-ghost btn-play-song" data-track-id="3">Listen to "Lattice Escape"</button>
+            </div>
+          </div>
+
+          <!-- 2097A -->
+          <div class="timeline-pane" id="pane-2097-sig" role="tabpanel" aria-labelledby="tab-2097-sig">
+            <div class="pane-lore-meta">FILE ID: NC_04.SIGND // DATA RESTORED</div>
+            <h3>2097: Capture of the Signal</h3>
+            <p>Aeron Vale broadcasts the Faviax signal directly into the E-Lattice nodes during a major corporate presentation. Millions experience brief flashbacks of unmanaged sorrow, empathy, and joy. Vanta Guard units are dispatched to locate the transmitter source.</p>
+            <div class="timeline-song-link">
+              <span>RESONATOR FREQUENCY:</span>
+              <button class="btn btn-ghost btn-play-song" data-track-id="1">Listen to "Neon Horizon"</button>
+            </div>
+          </div>
+
+          <!-- 2097B -->
+          <div class="timeline-pane" id="pane-2097-eid" role="tabpanel" aria-labelledby="tab-2097-eid">
+            <div class="pane-lore-meta">FILE ID: NC_05.EIDO // DATA RESTORED</div>
+            <h3>2097: Project EIDOLON Launch</h3>
+            <p>Under corporate panic, the Helix Dominion launches Project EIDOLON, attempting to back up and digitalize the consciousness of top ring residents before the signal spreads further. Lyra Nox installs a security backdoor code disguised as synthesizer lead variations.</p>
+            <div class="timeline-song-link">
+              <span>RESONATOR FREQUENCY:</span>
+              <button class="btn btn-ghost btn-play-song" data-track-id="5">Listen to "Eclipse Key"</button>
+            </div>
+          </div>
+
+          <!-- Afterglow -->
+          <div class="timeline-pane" id="pane-afterglow" role="tabpanel" aria-labelledby="tab-afterglow">
+            <div class="pane-lore-meta">FILE ID: NC_06.GLOW // DATA RESTORED</div>
+            <h3>The Afterglow Era</h3>
+            <p>The Eclipse Array experiences a partial mainframe crash. In the dark sectors where satellite coverage fails, survivors hear faint radio wave reflections. These echoes form the compilation known as the Afterglow Transmissions, signaling the birth of a new grid.</p>
+            <div class="timeline-song-link">
+              <span>RESONATOR FREQUENCY:</span>
+              <button class="btn btn-ghost btn-play-song" data-track-id="6">Listen to "Last Transmission"</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       FACTIONS & ARTIFACT ARCHIVE
+  ═══════════════════════════════════════ -->
+  <div class="section-wrapper bg-dark-secondary">
+    <section class="archive-section" id="archive" aria-labelledby="archive-title">
+      <div class="section-header reveal">
+        <span class="section-tag">HARDWARE ARCHIVE & FACTIONS</span>
+        <h2 class="section-title" id="archive-title">Artifacts & <span>Factions</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <!-- Factions list -->
+      <div class="factions-block reveal">
+        <h3>Primary Factions</h3>
+        <div class="factions-grid">
+          <div class="faction-card">
+            <h4>Helix Dominion</h4>
+            <p>The primary corporate entity controlling Neo-Astra's infrastructure. Creators of AURA.</p>
+          </div>
+          <div class="faction-card">
+            <h4>Vanta Prism Media</h4>
+            <p>The public relations network managing emotional propaganda broadcasts.</p>
+          </div>
+          <div class="faction-card">
+            <h4>Orion Vault</h4>
+            <p>A coalition of collectors preserving relics of acoustic history and old analog media.</p>
+          </div>
+          <div class="faction-card">
+            <h4>Eclipse Systems</h4>
+            <p>The orbital logistics corporation maintaining physical satellite platforms.</p>
+          </div>
+          <div class="faction-card">
+            <h4>The Tuners</h4>
+            <p>An underground movement of emotional hackers, custom synth builders, and rebels.</p>
+          </div>
+          <div class="faction-card">
+            <h4>Eclipse Monks</h4>
+            <p>An ascetic sect residing in the high rings who worship empty space waves.</p>
+          </div>
+          <div class="faction-card">
+            <h4>Vanta Guard</h4>
+            <p>The militarized drone force patrolling the low grid and looking for acoustic signals.</p>
+          </div>
+          <div class="faction-card">
+            <h4>Neon Pulse</h4>
+            <p>The network of safehouses and underground music cells supporting the band.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artifact Archive (Future Merch Mockup) -->
+      <div class="artifacts-block reveal">
+        <h3>Classified Artifacts</h3>
+        <div class="artifacts-grid">
+          <!-- Item 1 -->
+          <div class="artifact-card">
+            <div class="artifact-image-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <h4>Vale-Type Sax Modulator</h4>
+            <p>Aeron Vale's custom analog modulator. Converts frequency inputs into anti-AURA waves.</p>
+            <span class="artifact-status text-cyan">STATUS: LOGGED IN LOWER GRID</span>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="artifact-card">
+            <div class="artifact-image-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <h4>Orion Memory Vials</h4>
+            <p>Micro-containers used to store emotional files. Extremely unstable when exposed to heat.</p>
+            <span class="artifact-status text-magenta">STATUS: INVENTORY LOW</span>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="artifact-card">
+            <div class="artifact-image-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h4>Eclipse Key</h4>
+            <p>A decrypted memory drive designed to override orbital transmitter security walls.</p>
+            <span class="artifact-status text-purple">STATUS: DECRYPTED BY NOX</span>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="artifact-card">
+            <div class="artifact-image-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h4>Neon Halo Chips</h4>
+            <p>Illegal implants worn behind the ear that amplify low baselines from Neon Pulse nodes.</p>
+            <span class="artifact-status text-orange">STATUS: ACTIVE IN SLUM SECTORS</span>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="artifact-card">
+            <div class="artifact-image-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4M8 22h8"/></svg>
+            </div>
+            <h4>Rainmask</h4>
+            <p>Filter mask used to survive industrial sectors during storms. Includes audio headphones.</p>
+            <span class="artifact-status text-cyan">STATUS: DISPATCH LOGGED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CONTINUE THE SIGNAL (NEWSLETTER & SOCIAL)
+  ═══════════════════════════════════════ -->
+  <div class="section-wrapper">
+    <section class="connect-section" id="connect" aria-labelledby="connect-title">
+      <div class="section-header reveal">
+        <span class="section-tag">SUBSCRIBE TO TRANSMISSION REGISTER</span>
+        <h2 class="section-title" id="connect-title">Continue <span>the Signal</span></h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="connect-grid reveal">
+        <div class="connect-meta">
+          <h3>THE SIGNAL ONLY SURVIVES IF SOMEONE IS LISTENING.</h3>
+          <p>Join the Transmission Registry to receive classified coordinates, bootleg tracks, and lore keys directly from Aeron's node.</p>
+          
+          <div class="connect-socials">
+            <a href="#" class="social-btn" id="social-spotify"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12.5c2.5-1.2 5.5-1.2 8 0M7 9.5c3.3-1.5 7-1.5 10 0M9 15.5c1.7-.8 3.7-.8 5.5 0"/></svg> Spotify</a>
+            <a href="#" class="social-btn" id="social-youtube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="3"/><polygon points="10 10 16 14 10 18" fill="currentColor" stroke="none"/></svg> YouTube</a>
+            <a href="#" class="social-btn" id="social-apple"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a5 5 0 0 0-5 5c0 4 5 10 5 10s5-6 5-10a5 5 0 0 0-5-5z"/></svg> Apple</a>
+            <a href="#" class="social-btn" id="social-instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg> Instagram</a>
+            <a href="#" class="social-btn" id="social-tiktok"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg> TikTok</a>
+          </div>
+        </div>
+
+        <form class="registry-form" id="registry-form" novalidate aria-label="Newsletter sign-up">
+          <div class="form-group">
+            <label for="reg-name">CITIZEN CODE DESIGNATION</label>
+            <input type="text" id="reg-name" name="name" placeholder="Ex: VALE-NODE-9" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="reg-email">COMMUNICATION FREQUENCY (EMAIL)</label>
+            <input type="email" id="reg-email" name="email" placeholder="citizen@lattice.io" autocomplete="email">
+          </div>
+          <button type="submit" class="btn btn-primary btn-submit-registry">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            SUBMIT SIGN REGISTRY
+          </button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-logo">FAVIAX</div>
+    <p class="footer-copy">&copy; 2097 FAVIAX. Recovered Classified Signal. System Node: 0x8F92E.</p>
+  </footer>
+
+  <!-- ═══════════════════════════════════════
+       PERSISTENT AUDIO PLAYER HUD
+  ═══════════════════════════════════════ -->
+  <div class="persistent-player-hud" id="music-player-hud" role="region" aria-label="Persistent Music Player">
+    <div class="player-wrapper">
+      
+      <!-- Track Cover & Name -->
+      <div class="player-track-info">
+        <img src="assets/album-cover-1.png" alt="Current Album Cover" class="player-cover" id="player-track-cover">
+        <div class="player-text">
+          <span class="player-track-title" id="player-track-title">Neon Horizon</span>
+          <span class="player-track-subtitle" id="player-track-subtitle">Faviax // Aeron Vale</span>
+        </div>
+      </div>
+
+      <!-- Player Controls -->
+      <div class="player-controls">
+        <div class="control-buttons">
+          <button class="player-btn" id="player-btn-prev" aria-label="Previous track">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          
+          <button class="player-btn btn-play-pause" id="player-btn-play-pause" aria-label="Play track">
+            <!-- Play state icon -->
+            <svg class="icon-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <!-- Pause state icon -->
+            <svg class="icon-pause" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+          </button>
+
+          <button class="player-btn" id="player-btn-next" aria-label="Next track">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="player-progress-container">
+          <span class="player-time" id="player-current-time">0:00</span>
+          <div class="progress-bar-wrap" id="progress-bar-wrap" role="slider" aria-label="Track progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="progress-bar-fill" id="player-progress-fill"></div>
+            <div class="progress-bar-handle"></div>
+          </div>
+          <span class="player-time" id="player-duration">1:15</span>
+        </div>
+      </div>
+
+      <!-- Secondary volume / link options -->
+      <div class="player-options">
+        <!-- Volume slider -->
+        <div class="player-volume-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <input type="range" id="volume-range" class="volume-slider" min="0" max="100" value="80" aria-label="Volume">
+        </div>
+        
+        <!-- Quick links -->
+        <div class="player-external-links">
+          <a href="#" class="btn btn-ghost btn-player-external" id="player-spotify-link" aria-label="Listen on Spotify">SPOTIFY</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
