@@ -4,6 +4,7 @@
 
 import {
   OFFICIAL_ARTIST_PROFILES,
+  CONTACT_EMAIL,
   PENDING_CONFIG,
   DISCOGRAPHY,
   TRILOGY,
@@ -782,38 +783,44 @@ export function renderExplorar(lang) {
             : ''
         }
 
-        <div class="grid-2">
-          <article class="panel">
-            <h3>${escapeHtml(t.explorePage.pendingTitle)}</h3>
-            <ul class="pending-list">
-              ${t.explorePage.pendingItems.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}
-            </ul>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head">
-              <h3>${escapeHtml(t.explorePage.dryRunTitle)}</h3>
-              <span class="badge badge-cyan">${escapeHtml(t.explorePage.dryRunBadge)}</span>
+        <article class="panel contact-panel">
+          <div class="contact-info">
+            <p class="eyebrow">${escapeHtml(t.explorePage.contactEyebrow)}</p>
+            <h2 class="section-subtitle">${escapeHtml(t.explorePage.contactTitle)}</h2>
+            <p class="body-muted">${escapeHtml(t.explorePage.contactDesc)}</p>
+            <a href="mailto:${escapeHtml(CONTACT_EMAIL)}" class="contact-email-display">
+              ${escapeHtml(CONTACT_EMAIL)} <span aria-hidden="true">↗</span>
+            </a>
+            <div class="button-cluster">
+              <a href="mailto:${escapeHtml(CONTACT_EMAIL)}" class="btn btn-primary">${escapeHtml(t.explorePage.contactDirectLabel)} ↗</a>
+              <button type="button" id="copy-email-btn" class="btn btn-ghost" data-copy-email="${escapeHtml(CONTACT_EMAIL)}">${escapeHtml(t.explorePage.contactCopyLabel)}</button>
             </div>
-            <p class="body-muted">${escapeHtml(t.explorePage.dryRunDesc)}</p>
-            <form id="dry-run-contact-form" class="dry-run-form" novalidate>
-              <div class="form-field">
-                <label for="dry-name">${escapeHtml(t.explorePage.dryRunName)}</label>
-                <input id="dry-name" name="name" type="text" placeholder="Aeron-097" autocomplete="name" />
-              </div>
-              <div class="form-field">
-                <label for="dry-email">${escapeHtml(t.explorePage.dryRunEmail)}</label>
-                <input id="dry-email" name="email" type="email" placeholder="signal@example.com" required autocomplete="email" />
-              </div>
-              <div class="form-field">
-                <label for="dry-msg">${escapeHtml(t.explorePage.dryRunMsg)}</label>
-                <textarea id="dry-msg" name="message" rows="2" placeholder="Memory is light."></textarea>
-              </div>
-              <button type="submit" class="btn btn-cyan">${escapeHtml(t.explorePage.dryRunSubmit)}</button>
-              <div id="dry-run-feedback" class="dry-run-feedback" role="status" aria-live="polite" hidden></div>
-            </form>
-          </article>
-        </div>
+          </div>
+
+          <form id="contact-form" class="dry-run-form" novalidate>
+            <div class="form-field">
+              <label for="contact-name">${escapeHtml(t.explorePage.contactName)}</label>
+              <input id="contact-name" name="name" type="text" placeholder="${escapeHtml(t.explorePage.contactNamePlaceholder)}" autocomplete="name" />
+            </div>
+            <div class="form-field">
+              <label for="contact-email">${escapeHtml(t.explorePage.contactEmail)}</label>
+              <input id="contact-email" name="email" type="email" placeholder="${escapeHtml(t.explorePage.contactEmailPlaceholder)}" required autocomplete="email" />
+            </div>
+            <div class="form-field">
+              <label for="contact-subject">${escapeHtml(t.explorePage.contactSubject)}</label>
+              <input id="contact-subject" name="subject" type="text" placeholder="${escapeHtml(t.explorePage.contactSubjectPlaceholder)}" />
+            </div>
+            <div class="form-field">
+              <label for="contact-message">${escapeHtml(t.explorePage.contactMsg)}</label>
+              <textarea id="contact-message" name="message" rows="3" placeholder="${escapeHtml(t.explorePage.contactMsgPlaceholder)}" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-cyan">${escapeHtml(t.explorePage.contactSubmit)}</button>
+            <div id="contact-feedback" class="dry-run-feedback" role="status" aria-live="polite" hidden>
+              <span id="contact-feedback-text"></span>
+              <a id="contact-mailto-fallback" class="contact-fallback-link" href="mailto:${escapeHtml(CONTACT_EMAIL)}" hidden>${escapeHtml(t.explorePage.contactFallbackLink)} ↗</a>
+            </div>
+          </form>
+        </article>
       </div>
     </section>
   `;

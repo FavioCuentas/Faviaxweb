@@ -18,7 +18,7 @@ Aplicación web estática modular (HTML + CSS + ES Modules + History API SPA rou
 4. **Crónicas / Neo-Astra Chronicles (`/cronicas`)**: Collage asimétrico de ciudad, personajes y entorno orbital con premisa sin spoilers y enlaces a Archivo, Cronología y Libros.
 5. **Cronología (`/cronologia`)**: Hitos `2085` (despliegue urbano de AURA), `2087` (incidente SABLE RAIN) y `2097` (inicio de la historia principal), con alternancia imagen/texto en escritorio y diseño apilado en móvil.
 6. **Libros (`/libros`)**: Trilogía literaria (*I. Neon Constellations*, *II. Afterglow Archives*, *III. Becoming Light*) claramente diferenciada de los álbumes musicales y sin estado comercial deducido.
-7. **Explorar / Connect to the Signal (`/explorar`)**: Tarjetas de los perfiles oficiales verificados del artista, transparencia de canales pendientes y formulario local en modo *dry-run* (sin envíos reales).
+7. **Explorar / Connect to the Signal (`/explorar`)**: Tarjetas de los perfiles oficiales verificados del artista y contacto directo hacia `favio.cuentas@orvexaio.com`.
 8. **Merch / Equip the Signal (`/merch`)**: Hero con pasillo nocturno y estado breve editable (`MERCH_CONFIG` en `src/data.js`), sin precios, existencias ni acciones de compra ficticias.
 
 ---
@@ -78,7 +78,7 @@ Los botones sin destino verificado permanecen ocultos automáticamente en la int
 3. **Redes, Amazon Music y Contacto (`PENDING_CONFIG`):**
    - `amazonMusicArtistUrl`
    - `socialLinks`: `instagram`, `tiktok`, `x`, `discord`
-   - `contactDestination`: correo o endpoint real de contacto (el formulario en `/explorar` opera únicamente en modo *dry-run* local)
+   - `contactDestination`: configurado en `mailto:favio.cuentas@orvexaio.com`
 4. **Merch (`PENDING_CONFIG` & `MERCH_CONFIG`):**
    - `merchStoreUrl` (URL de tienda oficial)
    - `merchItems` (catálogo real aprobado cuando esté disponible)

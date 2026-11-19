@@ -176,11 +176,18 @@ try {
   assert.equal(await page.locator('.book-card').nth(2).locator('a').count(), 0);
   assert.match(await page.locator('.book-card').nth(2).textContent(), /Muy pronto/);
 
-  // Explorar dry-run validation
+  // Explorar contact check (no pending channels box; mailto directed to favio.cuentas@orvexaio.com)
   await page.goto(`${BASE_URL}/explorar`, { waitUntil: 'networkidle' });
-  await page.fill('#dry-email', 'aeron@neo-astra.test');
-  await page.getByRole('button', { name: 'Probar validación local' }).click();
-  assert.match(await page.locator('#dry-run-feedback').textContent(), /No se envió ningún mensaje real/);
+  const exploreText = await page.locator('main').textContent();
+  assert.doesNotMatch(exploreText, /Canales y recursos por configurar|Pending channels & links/i);
+  assert.equal(await page.locator('a[href="mailto:favio.cuentas@orvexaio.com"]').count() >= 1, true);
+  await page.fill('#contact-name', 'Aeron Vale');
+  await page.fill('#contact-email', 'aeron@neo-astra.test');
+  await page.fill('#contact-subject', 'Consulta FAVIAX');
+  await page.fill('#contact-message', 'Mensaje de prueba de contacto.');
+  await page.getByRole('button', { name: 'Enviar mensaje' }).click();
+  const mailtoHref = await page.locator('#contact-mailto-fallback').getAttribute('href');
+  assert.match(mailtoHref, /^mailto:favio\.cuentas@orvexaio\.com\?subject=Consulta%20FAVIAX&body=/);
 
   // Merch status check (no prices/stock/checkout buttons)
   await page.goto(`${BASE_URL}/merch`, { waitUntil: 'networkidle' });
@@ -225,6 +232,7 @@ try {
       ['musica-1440', '/musica'],
       ['universo-1440', '/universo'],
       ['libros-1440', '/libros'],
+      ['explorar-1440', '/explorar'],
     ]) {
       await page.goto(`${BASE_URL}${route}`, { waitUntil: 'networkidle' });
       await page.screenshot({ path: path.join(SCREENSHOT_DIR, `${name}.png`), fullPage: false });

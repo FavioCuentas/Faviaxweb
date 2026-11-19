@@ -2,7 +2,7 @@
    FAVIAX — Application Bootstrap & Interactive Wiring
    ===================================================== */
 
-import { I18N, UNIVERSE_ENTRIES } from './src/data.js';
+import { CONTACT_EMAIL, I18N, UNIVERSE_ENTRIES } from './src/data.js';
 import { resolveRoute, navigate } from './src/router.js';
 import {
   renderInicio,
@@ -201,23 +201,75 @@ function bindScreenInteractions(route) {
   }
 
   if (route.screen === 'explorar') {
-    const form = document.getElementById('dry-run-contact-form');
-    const feedback = document.getElementById('dry-run-feedback');
-    const emailInput = document.getElementById('dry-email');
-    if (form && feedback && emailInput) {
+    const copyBtn = document.getElementById('copy-email-btn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const addr = copyBtn.getAttribute('data-copy-email') || CONTACT_EMAIL;
+        try {
+          await navigator.clipboard.writeText(addr);
+          copyBtn.textContent = I18N[currentLang].explorePage.contactCopiedLabel;
+          setTimeout(() => {
+            copyBtn.textContent = I18N[currentLang].explorePage.contactCopyLabel;
+          }, 2200);
+        } catch {
+          window.location.href = `mailto:${addr}`;
+        }
+      });
+    }
+
+    const form = document.getElementById('contact-form');
+    const feedback = document.getElementById('contact-feedback');
+    const feedbackText = document.getElementById('contact-feedback-text');
+    const mailtoFallback = document.getElementById('contact-mailto-fallback');
+    const nameInput = document.getElementById('contact-name');
+    const emailInput = document.getElementById('contact-email');
+    const subjectInput = document.getElementById('contact-subject');
+    const msgInput = document.getElementById('contact-message');
+
+    if (form && feedback && feedbackText && mailtoFallback && emailInput && msgInput) {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+        const name = (nameInput?.value || '').trim();
         const email = emailInput.value.trim();
-        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const subject = (subjectInput?.value || '').trim() || 'Contacto FAVIAX';
+        const message = msgInput.value.trim();
+
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         feedback.hidden = false;
-        if (!isValid) {
+
+        if (!isValidEmail) {
           feedback.className = 'dry-run-feedback is-error';
-          feedback.textContent = I18N[currentLang].explorePage.dryRunError;
+          feedbackText.textContent = I18N[currentLang].explorePage.contactErrorEmail;
+          mailtoFallback.hidden = true;
           emailInput.focus();
           return;
         }
+
+        if (!message) {
+          feedback.className = 'dry-run-feedback is-error';
+          feedbackText.textContent = I18N[currentLang].explorePage.contactErrorMsg;
+          mailtoFallback.hidden = true;
+          msgInput.focus();
+          return;
+        }
+
+        const bodyLines = [
+          name ? `Nombre / Name: ${name}` : null,
+          `Correo / Email: ${email}`,
+          '',
+          message,
+        ].filter((line) => line !== null);
+
+        const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+        mailtoFallback.setAttribute('href', mailtoHref);
+        mailtoFallback.hidden = false;
+
         feedback.className = 'dry-run-feedback is-success';
-        feedback.textContent = I18N[currentLang].explorePage.dryRunSuccess(email);
+        feedbackText.textContent = I18N[currentLang].explorePage.contactReady(CONTACT_EMAIL);
+
+        if (!navigator.webdriver) {
+          mailtoFallback.click();
+        }
       });
     }
   }
