@@ -1,526 +1,335 @@
 /* =====================================================
-   FAVIAX UNIVERSE — main.js
+   FAVIAX — Application Bootstrap & Interactive Wiring
    ===================================================== */
 
-'use strict';
+import { I18N, UNIVERSE_ENTRIES } from './src/data.js';
+import { resolveRoute, navigate } from './src/router.js';
+import {
+  renderInicio,
+  renderMusica,
+  renderUniverso,
+  renderUniversoResults,
+  filterUniverseEntries,
+  renderUniversoDetail,
+  renderCronicas,
+  renderCronologia,
+  renderLibros,
+  renderExplorar,
+  renderMerch,
+  renderNotFound,
+} from './src/views.js';
 
-// ─── Track Database (Transmissions & Lore) ───────────
-const TRACKS = [
-  { id: 1, title: 'Neon Horizon', character: 'Aeron Vale', subtitle: 'Faviax // Aeron Vale', cover: 'assets/album-cover-1.png', freq: 110, tempo: 100, baseNote: 65 }, // F
-  { id: 2, title: 'Orion Drive', character: 'Lyra Nox', subtitle: 'Faviax // Lyra Nox', cover: 'assets/album-cover-1.png', freq: 135, tempo: 112, baseNote: 58 }, // Bb
-  { id: 3, title: 'Lattice Escape', character: 'Kade Ryder', subtitle: 'Faviax // Kade Ryder', cover: 'assets/album-cover-1.png', freq: 160, tempo: 120, baseNote: 60 }, // C
-  { id: 4, title: 'Chrome Rain', character: 'Aeron Vale', subtitle: 'Faviax // Aeron Vale', cover: 'assets/album-cover-2.png', freq: 85, tempo: 85, baseNote: 53 },  // F
-  { id: 5, title: 'Eclipse Key', character: 'Lyra Nox', subtitle: 'Faviax // Lyra Nox', cover: 'assets/album-cover-2.png', freq: 145, tempo: 108, baseNote: 55 },  // G
-  { id: 6, title: 'Last Transmission', character: 'SERAPH-9', subtitle: 'Faviax // SERAPH-9', cover: 'assets/album-cover-2.png', freq: 210, tempo: 90, baseNote: 62 } // D
-];
+const LANG_STORAGE_KEY = 'faviax_lang';
 
-let currentTrackIndex = 0;
-
-// ─── Custom Floating Cursor ──────────────────────────
-const cursor = document.getElementById('cursor');
-const cursorDot = document.getElementById('cursor-dot');
-
-let mouseX = 0, mouseY = 0;
-let dotX = 0, dotY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.left = mouseX + 'px';
-  cursor.style.top = mouseY + 'px';
-});
-
-function animateCursorDot() {
-  dotX += (mouseX - dotX) * 0.16;
-  dotY += (mouseY - dotY) * 0.16;
-  cursorDot.style.left = dotX + 'px';
-  cursorDot.style.top = dotY + 'px';
-  requestAnimationFrame(animateCursorDot);
-}
-animateCursorDot();
-
-// Expand cursor on active nodes
-function addCursorInteractions(selector) {
-  document.querySelectorAll(selector).forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.width = '36px';
-      cursor.style.height = '36px';
-      cursor.style.borderColor = 'var(--accent-magenta)';
-      cursor.style.backgroundColor = 'rgba(236, 72, 153, 0.05)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.width = '24px';
-      cursor.style.height = '24px';
-      cursor.style.borderColor = 'var(--accent-cyan)';
-      cursor.style.backgroundColor = 'transparent';
-    });
-  });
-}
-addCursorInteractions('a, button, input, textarea, .map-poi, .timeline-step, .track-log li');
-
-// Hide when leaving window
-document.addEventListener('mouseleave', () => {
-  cursor.style.opacity = '0';
-  cursorDot.style.opacity = '0';
-});
-document.addEventListener('mouseenter', () => {
-  cursor.style.opacity = '1';
-  cursorDot.style.opacity = '1';
-});
-
-// ─── Navigation Header & Scroll shadow ────────────────
-const nav = document.getElementById('nav');
-const navToggle = document.getElementById('nav-toggle');
-const navLinks = document.getElementById('nav-links');
-
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-
-navToggle.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', open);
-});
-
-navLinks.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
-
-// ─── Hero Parallax ────────────────────────────────────
-const heroBg = document.getElementById('hero-bg');
-window.addEventListener('scroll', () => {
-  if (!heroBg) return;
-  const offset = window.scrollY;
-  heroBg.style.transform = `scale(1.03) translateY(${offset * 0.35}px)`;
-}, { passive: true });
-
-// ─── World Map HUD Interactive POIs ───────────────────
-const pois = document.querySelectorAll('.map-poi');
-const coordsDisplay = document.getElementById('poi-coords');
-const poiContents = document.querySelectorAll('.poi-content');
-
-const POI_COORDINATES = {
-  'neon-pulse': 'LAT: 34.092 // LONG: -118.328',
-  'orion-vault': 'LAT: 52.520 // LONG: 13.404',
-  'rain-bridge': 'LAT: 35.676 // LONG: 139.650',
-  'implant-market': 'LAT: 22.396 // LONG: 114.109',
-  'halley-overlook': 'LAT: -33.868 // LONG: 151.207'
-};
-
-pois.forEach((poi) => {
-  poi.addEventListener('click', () => {
-    pois.forEach(p => p.classList.remove('active'));
-    poi.classList.add('active');
-
-    const targetPoi = poi.getAttribute('data-poi');
-    coordsDisplay.textContent = POI_COORDINATES[targetPoi] || 'LAT: 00.000 // LONG: 00.000';
-
-    poiContents.forEach((content) => {
-      content.classList.remove('active');
-      if (content.id === `content-${targetPoi}`) {
-        content.classList.add('active');
-      }
-    });
-
-    // Make custom glitch sound effect on POI click
-    playBeepSound(600, 0.08, 'sawtooth');
-  });
-});
-
-// ─── Chronicles Interactive Timeline ──────────────────
-const timelineSteps = document.querySelectorAll('.timeline-step');
-const timelinePanes = document.querySelectorAll('.timeline-pane');
-
-timelineSteps.forEach((step) => {
-  step.addEventListener('click', () => {
-    timelineSteps.forEach(s => {
-      s.classList.remove('active');
-      s.setAttribute('aria-selected', 'false');
-    });
-    step.classList.add('active');
-    step.setAttribute('aria-selected', 'true');
-
-    const targetPaneId = step.getAttribute('aria-controls');
-    timelinePanes.forEach((pane) => {
-      pane.classList.remove('active');
-      if (pane.id === targetPaneId) {
-        pane.classList.add('active');
-      }
-    });
-
-    playBeepSound(480, 0.06, 'triangle');
-  });
-});
-
-// ─── IntersectionObserver Fallback for Reveals ────────
-const supportsScrollDriven = CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
-if (!supportsScrollDriven) {
-  const reveals = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-  reveals.forEach(el => revealObserver.observe(el));
-}
-
-// ─── Web Audio API Retro Synthesizer Music Player ────
-let audioCtx = null;
-let isPlaying = false;
-let synthTimer = null;
-let currentSecs = 0;
-let trackDurationSecs = 75; // 1 min 15 secs for preview loops
-let currentTempo = 100;
-let baseMIDI = 65;
-
-// Synth sequencer state variables
-let seqStep = 0;
-let nextNoteTime = 0.0;
-const scheduleAheadTime = 0.1; // schedule notes 100ms in advance
-const lookahead = 25.0; // run scheduler every 25ms
-
-function initAudioContext() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-}
-
-// Quick UI beep sounds on click
-function playBeepSound(freq, duration, type) {
+function getStoredLang() {
   try {
-    if (!audioCtx) return;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    
-    osc.type = type || 'sine';
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-    
-    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-    
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
-  } catch (err) {
-    // Ignore context issues
+    const saved = localStorage.getItem(LANG_STORAGE_KEY);
+    return saved === 'en' ? 'en' : 'es';
+  } catch {
+    return 'es';
   }
 }
 
-// Synth Wave Sequencer Pattern
-// Simulates a retro synthwave groove (8 steps)
-function midiToFreq(note) {
-  return 440 * Math.pow(2, (note - 69) / 12);
+let currentLang = getStoredLang();
+
+function setLang(nextLang) {
+  currentLang = nextLang === 'en' ? 'en' : 'es';
+  try {
+    localStorage.setItem(LANG_STORAGE_KEY, currentLang);
+  } catch {
+    // Ignore storage restriction
+  }
+  renderApp({ scroll: false });
 }
 
-// Simple synth generator
-function synthStepSequencer() {
-  while (nextNoteTime < audioCtx.currentTime + scheduleAheadTime) {
-    scheduleNextSynthNotes(seqStep, nextNoteTime);
-    
-    // Move to next step (16th note pattern)
-    const stepDuration = 60.0 / currentTempo / 4; // 16th note duration
-    nextNoteTime += stepDuration;
-    seqStep = (seqStep + 1) % 8;
-  }
-  synthTimer = setTimeout(synthStepSequencer, lookahead);
-}
-
-function scheduleNextSynthNotes(step, time) {
-  const masterVolume = parseFloat(document.getElementById('volume-range').value) / 100 * 0.12;
-  if (masterVolume <= 0) return;
-
-  // 1. Bassline loop pattern (classic 8-step octave octave baseline)
-  // Step notes relative to baseMIDI
-  const bassPattern = [0, 0, 12, 0, 7, 7, 12, 3];
-  const bassMIDINote = baseMIDI - 24 + bassPattern[step];
-  
-  const bassOsc = audioCtx.createOscillator();
-  const bassFilter = audioCtx.createBiquadFilter();
-  const bassGain = audioCtx.createGain();
-
-  bassOsc.type = 'sawtooth';
-  bassOsc.frequency.setValueAtTime(midiToFreq(bassMIDINote), time);
-
-  // Filter envelope sweep
-  bassFilter.type = 'lowpass';
-  bassFilter.frequency.setValueAtTime(300, time);
-  bassFilter.frequency.exponentialRampToValueAtTime(1200, time + 0.05);
-  bassFilter.frequency.exponentialRampToValueAtTime(250, time + 0.15);
-
-  bassGain.gain.setValueAtTime(masterVolume * 0.8, time);
-  bassGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.14);
-
-  bassOsc.connect(bassFilter);
-  bassFilter.connect(bassGain);
-  bassGain.connect(audioCtx.destination);
-
-  bassOsc.start(time);
-  bassOsc.stop(time + 0.16);
-
-  // 2. Slow lead melodic pulse (only on specific beats to not sound chaotic)
-  // Step leads notes
-  const leadMelody = [0, null, 7, null, 12, null, 10, 7];
-  if (leadMelody[step] !== null && step % 2 === 0) {
-    const leadMIDINote = baseMIDI + leadMelody[step];
-    
-    const leadOsc = audioCtx.createOscillator();
-    const leadDelay = audioCtx.createDelay();
-    const leadDelayGain = audioCtx.createGain();
-    const leadGain = audioCtx.createGain();
-
-    leadOsc.type = 'triangle';
-    leadOsc.frequency.setValueAtTime(midiToFreq(leadMIDINote), time);
-
-    leadGain.gain.setValueAtTime(masterVolume * 0.4, time);
-    leadGain.gain.exponentialRampToValueAtTime(0.001, time + 0.4);
-
-    // Dynamic delay feed to make it sound spacious
-    leadDelay.delayTime.value = 0.25;
-    leadDelayGain.gain.value = 0.3;
-
-    leadOsc.connect(leadGain);
-    leadGain.connect(audioCtx.destination);
-
-    // Feed to delay
-    leadGain.connect(leadDelay);
-    leadDelay.connect(leadDelayGain);
-    leadDelayGain.connect(audioCtx.destination);
-
-    leadOsc.start(time);
-    leadOsc.stop(time + 0.5);
-  }
-
-  // 3. Cyberpunk Hi-Hat click (white noise pulse)
-  if (step % 2 === 1) {
-    const bufferSize = audioCtx.sampleRate * 0.04;
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = Math.random() * 2 - 1;
+function getPageTitle(route, lang) {
+  const nav = I18N[lang].nav;
+  switch (route.screen) {
+    case 'inicio':
+      return 'FAVIAX — Neon Constellations | Neo-Astra 2097';
+    case 'musica':
+      return `${nav.musica} — FAVIAX`;
+    case 'universo':
+      return `${nav.universo} — The Signal Archive | FAVIAX`;
+    case 'universo-detail': {
+      const entry = UNIVERSE_ENTRIES.find((e) => e.slug === route.slug);
+      return entry ? `${entry.name} — FAVIAX` : `FAVIAX`;
     }
-
-    const noiseNode = audioCtx.createBufferSource();
-    noiseNode.buffer = buffer;
-
-    const noiseFilter = audioCtx.createBiquadFilter();
-    noiseFilter.type = 'highpass';
-    noiseFilter.frequency.value = 7000;
-
-    const noiseGain = audioCtx.createGain();
-    noiseGain.gain.setValueAtTime(masterVolume * 0.15, time);
-    noiseGain.gain.exponentialRampToValueAtTime(0.0001, time + 0.03);
-
-    noiseNode.connect(noiseFilter);
-    noiseFilter.connect(noiseGain);
-    noiseGain.connect(audioCtx.destination);
-
-    noiseNode.start(time);
-    noiseNode.stop(time + 0.04);
+    case 'cronicas':
+      return `${nav.cronicas} — FAVIAX`;
+    case 'cronologia':
+      return `${nav.cronologia} — FAVIAX`;
+    case 'libros':
+      return `${nav.libros} — FAVIAX`;
+    case 'explorar':
+      return `${nav.explorar} — FAVIAX`;
+    case 'merch':
+      return `${nav.merch} — FAVIAX`;
+    default:
+      return `404 — FAVIAX`;
   }
 }
 
-// Player Control functions
-const playPauseBtn = document.getElementById('player-btn-play-pause');
-const playIcon = playPauseBtn.querySelector('.icon-play');
-const pauseIcon = playPauseBtn.querySelector('.icon-pause');
-const currentTrackTitle = document.getElementById('player-track-title');
-const currentTrackSubtitle = document.getElementById('player-track-subtitle');
-const currentTrackCover = document.getElementById('player-track-cover');
-const currentSecsDisplay = document.getElementById('player-current-time');
-const progressFill = document.getElementById('player-progress-fill');
-const progressHandle = document.querySelector('.progress-bar-handle');
+function syncChrome(route, lang) {
+  const t = I18N[lang];
+  document.documentElement.lang = lang;
+  document.title = getPageTitle(route, lang);
 
-let timerInterval = null;
+  const skipLink = document.getElementById('skip-link');
+  if (skipLink) skipLink.textContent = t.skipToContent;
 
-function updatePlayerUI() {
-  const track = TRACKS[currentTrackIndex];
-  currentTrackTitle.textContent = track.title;
-  currentTrackSubtitle.textContent = track.subtitle;
-  currentTrackCover.src = track.cover;
-  
-  // Update lore links
-  const spotifyLink = document.getElementById('player-spotify-link');
-  if (spotifyLink) {
-    spotifyLink.href = `#`; // Placeholder link matching streaming options
-  }
+  const tagline = document.getElementById('brand-tagline');
+  if (tagline) tagline.textContent = t.brandTagline;
 
-  // Sync tempo and base frequency
-  currentTempo = track.tempo;
-  baseMIDI = track.baseNote;
-}
+  const statusText = document.getElementById('header-status-text');
+  if (statusText) statusText.textContent = t.telemetryStatus;
 
-function startPlayback() {
-  initAudioContext();
-  
-  isPlaying = true;
-  playIcon.style.display = 'none';
-  pauseIcon.style.display = 'block';
+  const footerCopy = document.getElementById('footer-copy');
+  if (footerCopy) footerCopy.textContent = t.footer.copy;
 
-  // Start synth sequencer loop
-  nextNoteTime = audioCtx.currentTime;
-  seqStep = 0;
-  synthStepSequencer();
+  const footerLinksLabel = document.getElementById('footer-links-label');
+  if (footerLinksLabel) footerLinksLabel.textContent = t.footer.linksLabel;
 
-  // Run progress timer
-  timerInterval = setInterval(() => {
-    currentSecs++;
-    if (currentSecs >= trackDurationSecs) {
-      nextTrack();
+  document.querySelectorAll('[data-nav-key]').forEach((link) => {
+    const key = link.getAttribute('data-nav-key');
+    if (key && t.nav[key]) {
+      link.textContent = t.nav[key];
+    }
+    const isActive = route.navKey === key;
+    link.classList.toggle('is-active', isActive);
+    if (isActive) {
+      link.setAttribute('aria-current', 'page');
     } else {
-      updateProgressBar();
+      link.removeAttribute('aria-current');
     }
-  }, 1000);
-}
-
-function stopPlayback() {
-  isPlaying = false;
-  playIcon.style.display = 'block';
-  pauseIcon.style.display = 'none';
-
-  if (synthTimer) {
-    clearTimeout(synthTimer);
-    synthTimer = null;
-  }
-  if (timerInterval) {
-    clearInterval(timerInterval);
-    timerInterval = null;
-  }
-}
-
-function updateProgressBar() {
-  const pct = (currentSecs / trackDurationSecs) * 100;
-  progressFill.style.width = `${pct}%`;
-  progressHandle.style.left = `${pct}%`;
-  
-  // Format current minutes
-  const mins = Math.floor(currentSecs / 60);
-  const secs = currentSecs % 60;
-  currentSecsDisplay.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
-}
-
-function playTrack(index) {
-  stopPlayback();
-  currentTrackIndex = (index + TRACKS.length) % TRACKS.length;
-  currentSecs = 0;
-  updateProgressBar();
-  updatePlayerUI();
-  startPlayback();
-}
-
-function nextTrack() {
-  playTrack(currentTrackIndex + 1);
-}
-
-function prevTrack() {
-  playTrack(currentTrackIndex - 1);
-}
-
-// Track actions listeners
-playPauseBtn.addEventListener('click', () => {
-  if (isPlaying) {
-    stopPlayback();
-  } else {
-    startPlayback();
-  }
-  playBeepSound(400, 0.08, 'sine');
-});
-
-document.getElementById('player-btn-next').addEventListener('click', () => {
-  nextTrack();
-  playBeepSound(500, 0.05, 'sine');
-});
-
-document.getElementById('player-btn-prev').addEventListener('click', () => {
-  prevTrack();
-  playBeepSound(500, 0.05, 'sine');
-});
-
-// Click track from Transmissions Tracklist
-document.querySelectorAll('.track-log li').forEach((li) => {
-  li.addEventListener('click', () => {
-    const trackNum = parseInt(li.getAttribute('data-track')) - 1;
-    playTrack(trackNum);
   });
-});
 
-// Link timeline buttons to trigger songs
-document.querySelectorAll('.btn-play-song').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const trackNum = parseInt(btn.getAttribute('data-track-id')) - 1;
-    playTrack(trackNum);
+  document.querySelectorAll('[data-lang-btn]').forEach((btn) => {
+    const btnLang = btn.getAttribute('data-lang-btn');
+    const active = btnLang === lang;
+    btn.classList.toggle('is-active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
   });
-});
 
-// Link Nav LISTEN NOW CTA to start player
-document.getElementById('nav-listen-cta').addEventListener('click', () => {
-  if (!isPlaying) {
-    startPlayback();
-  } else {
-    // Jump to first track
-    playTrack(0);
+  const menuToggle = document.getElementById('menu-toggle');
+  const navDrawer = document.getElementById('primary-nav');
+  if (menuToggle && navDrawer) {
+    const isOpen = navDrawer.classList.contains('is-open');
+    menuToggle.setAttribute('aria-label', isOpen ? t.menuClose : t.menuOpen);
   }
-  playBeepSound(650, 0.1, 'sine');
-});
+}
 
-document.getElementById('btn-hero-listen').addEventListener('click', () => {
-  if (!isPlaying) {
-    startPlayback();
-  }
-  playBeepSound(650, 0.1, 'sine');
-});
+function closeMobileMenu() {
+  const menuToggle = document.getElementById('menu-toggle');
+  const navDrawer = document.getElementById('primary-nav');
+  if (!menuToggle || !navDrawer) return;
+  navDrawer.classList.remove('is-open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.setAttribute('aria-label', I18N[currentLang].menuOpen);
+}
 
-// ─── Forms Submit Animations ──────────────────────────
-const regForm = document.getElementById('registry-form');
-
-regForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const nameInput = document.getElementById('reg-name');
-  const emailInput = document.getElementById('reg-email');
-  const submitBtn = regForm.querySelector('.btn-submit-registry');
-  
-  if (!emailInput.value) {
-    playBeepSound(150, 0.2, 'sawtooth');
-    emailInput.style.borderColor = 'var(--accent-red)';
-    setTimeout(() => { emailInput.style.borderColor = ''; }, 2000);
-    return;
+function bindScreenInteractions(route) {
+  if (route.screen === 'musica') {
+    document.querySelectorAll('[data-album-select]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const album = btn.getAttribute('data-album-select');
+        navigate(`/musica?album=${encodeURIComponent(album)}`, { scroll: false });
+      });
+    });
   }
 
-  // Visual success feedback
-  playBeepSound(800, 0.15, 'sine');
-  const originalHtml = submitBtn.innerHTML;
-  
-  submitBtn.innerHTML = `
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <polyline points="20 6 9 17 4 12"/>
-    </svg>
-    TRANSMISSION REGISTRY LOGGED
-  `;
-  submitBtn.style.color = 'var(--accent-cyan)';
-  submitBtn.style.borderColor = 'var(--accent-cyan)';
-  submitBtn.disabled = true;
+  if (route.screen === 'universo') {
+    const updateArchiveUrl = (cat, q, replace = true) => {
+      const nextParams = new URLSearchParams();
+      if (cat && cat !== 'all') nextParams.set('cat', cat);
+      if (q && q.trim()) nextParams.set('q', q.trim());
+      const qs = nextParams.toString();
+      const target = qs ? `/universo?${qs}` : '/universo';
+      if (replace) {
+        window.history.replaceState({}, '', target);
+      } else {
+        navigate(target, { scroll: false });
+      }
+    };
 
-  setTimeout(() => {
-    submitBtn.innerHTML = originalHtml;
-    submitBtn.style.color = '';
-    submitBtn.style.borderColor = '';
-    submitBtn.disabled = false;
-    regForm.reset();
-  }, 3500);
-});
+    const applyFilterInPlace = (cat, q) => {
+      const filtered = filterUniverseEntries(currentLang, cat, q);
+      const resultsEl = document.getElementById('archive-results');
+      const countEl = document.getElementById('archive-count');
+      if (resultsEl) {
+        resultsEl.innerHTML = renderUniversoResults(currentLang, filtered);
+        const resetBtn = document.getElementById('archive-reset-btn');
+        if (resetBtn) {
+          resetBtn.addEventListener('click', () => navigate('/universo', { scroll: false }));
+        }
+      }
+      if (countEl) {
+        countEl.textContent = I18N[currentLang].universePage.resultsCount(filtered.length);
+      }
+      document.querySelectorAll('[data-archive-cat]').forEach((pill) => {
+        const pillCat = pill.getAttribute('data-archive-cat');
+        const active = pillCat === cat;
+        pill.classList.toggle('is-active', active);
+        pill.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    };
 
-// Setup initial UI states
-updatePlayerUI();
-console.log('FAVIAX SYSTEM RECOVERED // TERMINAL ONLINE');
+    document.querySelectorAll('[data-archive-cat]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cat = btn.getAttribute('data-archive-cat') || 'all';
+        const searchInput = document.getElementById('archive-search');
+        const q = searchInput ? searchInput.value : '';
+        updateArchiveUrl(cat, q, false);
+      });
+    });
+
+    const searchInput = document.getElementById('archive-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const activeBtn = document.querySelector('[data-archive-cat].is-active');
+        const cat = activeBtn ? activeBtn.getAttribute('data-archive-cat') : 'all';
+        const q = searchInput.value;
+        updateArchiveUrl(cat, q, true);
+        applyFilterInPlace(cat, q);
+      });
+    }
+
+    const resetBtn = document.getElementById('archive-reset-btn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => navigate('/universo', { scroll: false }));
+    }
+  }
+
+  if (route.screen === 'explorar') {
+    const form = document.getElementById('dry-run-contact-form');
+    const feedback = document.getElementById('dry-run-feedback');
+    const emailInput = document.getElementById('dry-email');
+    if (form && feedback && emailInput) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        feedback.hidden = false;
+        if (!isValid) {
+          feedback.className = 'dry-run-feedback is-error';
+          feedback.textContent = I18N[currentLang].explorePage.dryRunError;
+          emailInput.focus();
+          return;
+        }
+        feedback.className = 'dry-run-feedback is-success';
+        feedback.textContent = I18N[currentLang].explorePage.dryRunSuccess(email);
+      });
+    }
+  }
+}
+
+function renderApp({ scroll = true } = {}) {
+  const appRoot = document.getElementById('app-root');
+  if (!appRoot) return;
+
+  const route = resolveRoute(window.location);
+  syncChrome(route, currentLang);
+
+  let html = '';
+  switch (route.screen) {
+    case 'inicio':
+      html = renderInicio(currentLang);
+      break;
+    case 'musica':
+      html = renderMusica(currentLang, route.params);
+      break;
+    case 'universo':
+      html = renderUniverso(currentLang, route.params);
+      break;
+    case 'universo-detail':
+      html = renderUniversoDetail(currentLang, route.slug);
+      break;
+    case 'cronicas':
+      html = renderCronicas(currentLang);
+      break;
+    case 'cronologia':
+      html = renderCronologia(currentLang);
+      break;
+    case 'libros':
+      html = renderLibros(currentLang);
+      break;
+    case 'explorar':
+      html = renderExplorar(currentLang);
+      break;
+    case 'merch':
+      html = renderMerch(currentLang);
+      break;
+    default:
+      html = renderNotFound(currentLang);
+      break;
+  }
+
+  appRoot.innerHTML = html;
+  bindScreenInteractions(route);
+
+  if (scroll) {
+    if (window.location.hash) {
+      const target = document.querySelector(window.location.hash);
+      if (target) {
+        target.scrollIntoView();
+        return;
+      }
+    }
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}
+
+function setupGlobalEvents() {
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[data-link]');
+    if (!link) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('http') || href.startsWith('mailto:')) return;
+
+    e.preventDefault();
+    closeMobileMenu();
+    navigate(href);
+  });
+
+  document.querySelectorAll('[data-lang-btn]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = btn.getAttribute('data-lang-btn');
+      setLang(next);
+    });
+  });
+
+  const menuToggle = document.getElementById('menu-toggle');
+  const navDrawer = document.getElementById('primary-nav');
+  if (menuToggle && navDrawer) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navDrawer.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      menuToggle.setAttribute(
+        'aria-label',
+        isOpen ? I18N[currentLang].menuClose : I18N[currentLang].menuOpen
+      );
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navDrawer.classList.contains('is-open')) {
+        closeMobileMenu();
+        menuToggle.focus();
+      }
+    });
+  }
+
+  window.addEventListener('popstate', () => {
+    closeMobileMenu();
+    renderApp({ scroll: true });
+  });
+
+  window.addEventListener('faviax:routechange', (e) => {
+    closeMobileMenu();
+    renderApp({ scroll: e.detail?.scroll !== false });
+  });
+}
+
+setupGlobalEvents();
+renderApp({ scroll: false });
