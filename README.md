@@ -44,6 +44,7 @@ npm test
 ## Inventario de recursos gráficos (`assets/`)
 
 - **Arte oficial:**
+  - `assets/hero-neo-astra.jpg` — Fondo principal del Hero (*NEON CONSTELLATIONS*)
   - `assets/album-neon-constellations.jpg` — Portada oficial *Neon Constellations* (álbum)
   - `assets/album-afterglow.jpg` — Portada oficial *Afterglow* (*Neon Constellations: Afterglow Archives*, álbum)
   - `assets/book-neon-constellations.jpg` — Portada oficial *I. Neon Constellations* (Book I)

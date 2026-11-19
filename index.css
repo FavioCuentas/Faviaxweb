@@ -538,35 +538,17 @@ textarea {
 }
 
 .hero-img-skyline {
-  opacity: 0.72;
-  filter: saturate(1.15) contrast(1.06);
-}
-
-.hero-img-grid {
-  opacity: 0.28;
-  mix-blend-mode: screen;
-}
-
-.hero-rain-layer {
-  position: absolute;
-  inset: 0;
-  background-image: repeating-linear-gradient(
-    102deg,
-    rgba(64, 223, 245, 0.04) 0px,
-    rgba(64, 223, 245, 0.04) 1px,
-    transparent 1px,
-    transparent 26px
-  );
-  opacity: 0.55;
+  opacity: 0.92;
+  object-position: 68% center;
+  filter: saturate(1.06) contrast(1.04);
 }
 
 .hero-scrim {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 18% 35%, rgba(120, 92, 255, 0.25), transparent 52%),
-    radial-gradient(circle at 82% 28%, rgba(255, 42, 133, 0.14), transparent 46%),
-    linear-gradient(180deg, rgba(9, 8, 17, 0.72) 0%, rgba(9, 8, 17, 0.52) 45%, #090811 100%);
+    linear-gradient(90deg, rgba(9, 8, 17, 0.86) 0%, rgba(9, 8, 17, 0.64) 44%, rgba(9, 8, 17, 0.16) 78%, rgba(9, 8, 17, 0.34) 100%),
+    linear-gradient(180deg, rgba(9, 8, 17, 0.45) 0%, rgba(9, 8, 17, 0.08) 45%, #090811 100%);
 }
 
 .hero-shell {

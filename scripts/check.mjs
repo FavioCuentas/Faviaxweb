@@ -25,6 +25,7 @@ for (const file of jsFiles) {
 }
 
 const referencedAssets = new Set([
+  '/assets/hero-neo-astra.jpg',
   '/assets/skyline-rain.jpg',
   '/assets/hero-bg.png',
   MERCH_CONFIG.heroImage,

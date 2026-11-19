@@ -92,9 +92,7 @@ export function renderInicio(lang) {
   return `
     <section class="hero" aria-label="NEON CONSTELLATIONS">
       <div class="hero-backdrop" aria-hidden="true">
-        <img src="/assets/skyline-rain.jpg" alt="" class="hero-img hero-img-skyline" />
-        <img src="/assets/hero-bg.png" alt="" class="hero-img hero-img-grid" />
-        <div class="hero-rain-layer"></div>
+        <img src="/assets/hero-neo-astra.jpg" alt="" class="hero-img hero-img-skyline" />
         <div class="hero-scrim"></div>
       </div>
 
