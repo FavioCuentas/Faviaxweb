@@ -25,6 +25,10 @@ for (const file of jsFiles) {
 }
 
 const referencedAssets = new Set([
+  '/favicon.ico',
+  '/faviax-icon-32.png',
+  '/apple-touch-icon.png',
+  '/faviax-icon-192.png',
   '/assets/hero-neo-astra.jpg',
   '/assets/skyline-rain.jpg',
   '/assets/hero-bg.png',

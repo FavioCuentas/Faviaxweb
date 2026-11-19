@@ -9,7 +9,15 @@ const DIST = path.join(ROOT, 'dist');
 await fs.rm(DIST, { recursive: true, force: true });
 await fs.mkdir(DIST, { recursive: true });
 
-for (const file of ['index.html', 'index.css', 'main.js']) {
+for (const file of [
+  'index.html',
+  'index.css',
+  'main.js',
+  'favicon.ico',
+  'faviax-icon-32.png',
+  'apple-touch-icon.png',
+  'faviax-icon-192.png',
+]) {
   await fs.copyFile(path.join(ROOT, file), path.join(DIST, file));
 }
 

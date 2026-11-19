@@ -119,6 +119,33 @@ try {
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
 
+  // Favicon checks on home (/) and internal route (/musica)
+  for (const checkRoute of ['/', '/musica']) {
+    await page.goto(`${BASE_URL}${checkRoute}`, { waitUntil: 'networkidle' });
+    const iconLinks = await page.evaluate(() =>
+      Array.from(document.querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]')).map((el) => ({
+        rel: el.getAttribute('rel'),
+        href: el.getAttribute('href'),
+        type: el.getAttribute('type'),
+        sizes: el.getAttribute('sizes'),
+      }))
+    );
+    assert.deepEqual(iconLinks, [
+      { rel: 'icon', href: '/favicon.ico', type: null, sizes: '16x16 32x32 48x48' },
+      { rel: 'icon', href: '/faviax-icon-32.png', type: 'image/png', sizes: '32x32' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', type: null, sizes: '180x180' },
+    ]);
+  }
+  for (const [iconPath, expectedType] of [
+    ['/favicon.ico', 'image/x-icon'],
+    ['/faviax-icon-32.png', 'image/png'],
+    ['/apple-touch-icon.png', 'image/png'],
+  ]) {
+    const res = await page.request.get(`${BASE_URL}${iconPath}`);
+    assert.equal(res.status(), 200, `${iconPath} did not return 200`);
+    assert.equal(res.headers()['content-type'], expectedType, `${iconPath} unexpected content-type`);
+  }
+
   // Inicio -> Música -> Artist Profile links
   await page.goto(BASE_URL, { waitUntil: 'networkidle' });
   await page.getByRole('link', { name: 'Escuchar música' }).first().click();
