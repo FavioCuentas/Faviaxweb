@@ -124,8 +124,8 @@ export const TRILOGY = [
     numeral: 'II',
     title: 'II. Afterglow Archives',
     kind: { es: 'Novela · Volumen II', en: 'Novel · Volume II' },
-    cover: '/assets/album-afterglow.jpg',
-    coverStatus: 'provisional',
+    cover: '/assets/book-afterglow.jpg',
+    coverStatus: 'official',
     comingSoon: true,
     logline: {
       es: 'Segunda entrega de la trilogía literaria, centrada en las secuelas de las transmisiones y los archivos emocionales que persisten en la memoria de la ciudad.',

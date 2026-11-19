@@ -44,8 +44,10 @@ npm test
 ## Inventario de recursos gráficos (`assets/`)
 
 - **Arte oficial:**
-  - `assets/album-neon-constellations.jpg` — Portada oficial *Neon Constellations*
-  - `assets/album-afterglow.jpg` — Portada oficial *Afterglow* (*Neon Constellations: Afterglow Archives*, también usada como referencia visual provisional en Libro II)
+  - `assets/album-neon-constellations.jpg` — Portada oficial *Neon Constellations* (álbum)
+  - `assets/album-afterglow.jpg` — Portada oficial *Afterglow* (*Neon Constellations: Afterglow Archives*, álbum)
+  - `assets/book-neon-constellations.jpg` — Portada oficial *I. Neon Constellations* (Book I)
+  - `assets/book-afterglow.jpg` — Portada oficial *II. Afterglow Archives* (Book II)
   - `assets/album-cover-2.png` — Ilustración urbana nocturna bajo la lluvia (usada en el hito 2087 *SABLE RAIN* de Cronología)
   - `assets/hero-bg.png` — Ilustración de Neo-Astra (usada en Hero, AURA, Casas de Neón y 2085)
   - `assets/about-art.png` — Escena musical en vivo (usada en *Neon Pulse*)
@@ -54,7 +56,6 @@ npm test
   - `assets/char-aeron.jpg` — Retrato conceptual de Aeron Vale
   - `assets/char-lyra.jpg` — Retrato conceptual de Lyra Nox
   - `assets/char-kade.jpg` — Retrato conceptual de Kade Ryder
-  - `assets/book-neon-constellations.jpg` — Portada oficial *I. Neon Constellations*
 - **Arte complementario generado para escenas faltantes:**
   - `assets/orbital-array.jpg` — Entorno orbital (SERAPH-9, EIDOLON, visual provisional Libro III)
   - `assets/merch-corridor.jpg` — Pasillo nocturno arquitectónico (Hero de *Merch / Equip the Signal*)
@@ -73,7 +74,7 @@ Los botones sin destino verificado permanecen ocultos automáticamente en la int
 2. **Libros (`TRILOGY`):**
    - `links.amazonKdp` (enlace verificado de Amazon / KDP por volumen).
    - `links.readSample` (enlace verificado de lectura o muestra oficial).
-   - Portadas oficiales dedicadas para *II. Afterglow Archives* y *III. Becoming Light* (actualmente usan visuales provisionales etiquetados).
+   - Portada oficial dedicada para *III. Becoming Light* (actualmente usa visual provisional etiquetado).
 3. **Redes, Amazon Music y Contacto (`PENDING_CONFIG`):**
    - `amazonMusicArtistUrl`
    - `socialLinks`: `instagram`, `tiktok`, `x`, `discord`
